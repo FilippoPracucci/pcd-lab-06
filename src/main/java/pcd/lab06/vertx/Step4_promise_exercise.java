@@ -20,11 +20,20 @@ import io.vertx.core.*;
 class VerticleWithPromise extends AbstractVerticle {
 	
 	public void start() {
-		log("started.");	
+		log("started.");
+		final Future<Double> fut = this.getDelayedRandom(1000);
+		fut.onComplete((res) -> {
+			System.out.println("Result: " + res.result());
+		});
 	}
 
 	protected Future<Double> getDelayedRandom(int delay){
-		return null;
+		Promise<Double> promise = Promise.promise();
+		this.getVertx().setTimer(delay, (res) -> {
+			final Double num = Math.random();
+			promise.complete(num);
+		});
+		return promise.future(); // ottenere handle dell'event loop che è alla base del Verticle
 	}
 	
 	private void log(String msg) {

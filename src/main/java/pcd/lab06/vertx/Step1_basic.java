@@ -13,7 +13,7 @@ public class Step1_basic {
 		
 		System.out.println(new File(".").getAbsoluteFile());
 		
-		Vertx  vertx = Vertx.vertx();
+		Vertx  vertx = Vertx.vertx(); // crea un event loop
 
 		FileSystem fs = vertx.fileSystem();    		
 
